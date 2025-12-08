@@ -8,6 +8,10 @@ MindRepo is a conversational AI-powered "Second Brain" system designed for knowl
 
 **Command Prefix**: All commands use the `!` prefix to avoid conflicts with AI agent internal commands.
 
+**Knowledge Management Approach**: Hybrid PARA + Zettelkasten:
+- **PARA** for action management (Projects, Areas, Archives)
+- **Zettelkasten** for knowledge base (`/30-Resources/`) - atomic notes with rich linking
+
 ---
 
 ## Architecture
@@ -15,28 +19,32 @@ MindRepo is a conversational AI-powered "Second Brain" system designed for knowl
 ### Folder Structure
 
 ```
-/00_Inbox/
+/00-Inbox/
   └─ Landing zone for raw thoughts, unparsed PDFs, brain dumps
 
-/10_Projects/
-  ├─ 11_Consulting/
+/10-Projects/
+  ├─ 11-Consulting/
   │   └─ [Client_Name]/
   │       ├─ README.md (auto-created)
   │       ├─ Meetings/ (auto-created)
   │       └─ TODO.md or Action_Items.md (auto-created)
-  ├─ 12_PersonalProject/
+  ├─ 12-PersonalProject/
   │   └─ [Project_Name]/ (same structure)
-  └─ 13_Life/
+  └─ 13-Life/
       └─ [Project_Name]/ (same structure)
 
-/20_Areas/
-  ├─ Career.md
-  ├─ Health.md
-  ├─ Hobbies.md
-  └─ Languages.md
-  (Additional areas as needed: Finance.md, Home.md, etc.)
+/20-Areas/
+  ├─ Career/
+  │   └─ Career.md
+  ├─ Health/
+  │   └─ Health.md
+  ├─ Hobbies/
+  │   └─ Hobbies.md
+  └─ Languages/
+      └─ Languages.md
+  (Additional areas as needed: Finance/, Home/, etc.)
 
-/30_Resources/
+/30-Resources/
   ├─ Python/
   ├─ PySpark/
   ├─ AWS/
@@ -45,31 +53,55 @@ MindRepo is a conversational AI-powered "Second Brain" system designed for knowl
       └─ [Topic].md
           └─ code/ (subfolder for separate code files >50 lines)
 
-/90_Journal/
-  └─ YYYY/
-      └─ YYYY-MM-DD.md
-          ├─ ## ⏱️ Work Log
-          ├─ ## 📝 Notes
-          ├─ ## 🔗 Links
-          └─ ## ✅ Completed
+/40-Journal/
+  ├─ Work/
+  │   └─ YYYY/
+  │       └─ YYYY-MM-DD.md
+  │           ├─ ## ⏱️ Work Log
+  │           ├─ ## 📝 Notes
+  │           ├─ ## 🔗 Links
+  │           └─ ## ✅ Completed
+  └─ Personal/
+      └─ YYYY/
+          └─ YYYY-MM-DD.md
+              ├─ ## 📝 Notes
+              ├─ ## 🔗 Links
+              ├─ ## 💭 Reflections
+              └─ ## ✅ Completed
 
-/90_Archive/
+/80-MOCs/
+  └─ [Category]_MOC.md or [Category]_Index.md
+
+/90-Archive/
   └─ YYYY/
       └─ [Archived_Items]/
 
-/00_Meta/
-  └─ Templates/ (templates to be created)
+/.metadata/
+  └─ Templates/ (note templates for AI agents)
+      ├─ Daily-Journal.md
+      ├─ Meeting.md
+      ├─ Study-Note.md
+      ├─ Atomic-Note.md
+      ├─ Project-README.md
+      ├─ Error-Debug.md
+      ├─ Review.md
+      ├─ MOC.md
+      └─ Area.md
 ```
 
 ---
 
 ## Obsidian Syntax Requirements
 
-### 1. Links
+### 1. Links (Zettelkasten-Enhanced)
 - **ALWAYS** use Wikilinks: `[[Note Name]]`
 - **NEVER** use standard Markdown links: `[text](path)`
+- **Bidirectional linking**: When linking Note A → Note B, also add link in Note B → Note A (in "## Related" section)
+- **Link clusters**: Create connections between related concepts
+- **Link suggestions**: When creating notes, suggest 3-5 related existing notes to link
 - Link to existing notes when mentioned
 - Create new notes when appropriate (use proper naming)
+- **Link context**: Add brief context about why notes are linked (optional but recommended)
 
 ### 2. Frontmatter
 Every new note MUST have YAML frontmatter:
@@ -96,6 +128,13 @@ tags: [kebab-case, multiple-tags]
 - `code`: Code snippets and examples
 - `link`: Saved links and bookmarks
 - `area`: Area maintenance files
+- `permanent`: Permanent/evergreen notes (Zettelkasten)
+- `atomic`: Atomic notes - single concept (Zettelkasten)
+- `moc`: Map of Content - index/linking hub
+- `brainstorm`: Brainstorming session notes
+- `qa`: Q&A session notes
+- `question`: Question/answer notes
+- `journal-entry`: Raw journal entry in inbox (before categorization)
 
 ### 3. Callouts
 Use Obsidian callouts for emphasis:
@@ -108,24 +147,74 @@ Use Obsidian callouts for emphasis:
 - `> [!NOTE]` - Notes
 - `> [!TIP]` - Tips
 
+### 4. Templates
+When creating notes, use templates from `/.metadata/Templates/`:
+
+- **Daily-Journal.md** - For daily journal entries
+- **Meeting.md** - For meeting notes
+- **Study-Note.md** - For comprehensive study notes
+- **Atomic-Note.md** - For atomic permanent notes (Zettelkasten)
+- **Project-README.md** - For project documentation
+- **Error-Debug.md** - For error troubleshooting
+- **Review.md** - For reviews/retrospectives
+- **MOC.md** - For Maps of Content
+- **Area.md** - For area maintenance files
+
+**Template Variables**:
+- `{{date:YYYY-MM-DD}}` - Current date
+- `{{title}}` - Note title/topic
+
+**Usage**: Copy template, replace variables, customize content, add proper frontmatter and links.
+
 ---
 
 ## Commands Specification
 
 ### Core Commands
 
-#### `!log [text]`
+#### `!journal [text]`
 
-**Purpose**: Append work log entry to today's journal
+**Purpose**: Add journal entry to inbox for end-of-day processing
 
 **Action**:
-1. Locate today's note: `/90_Journal/YYYY/YYYY-MM-DD.md` (create if missing)
+1. Create entry in `/00-Inbox/` with timestamp
+2. Format: `[YYYY-MM-DD HH:MM] [text]`
+3. File naming: `Journal_YYYY-MM-DD_HHMM.md` or append to existing inbox file
+4. Auto-link: Detect mentioned clients/projects and wrap in Wikilinks `[[Client Name]]` or `[[Project Name]]`
+5. **Do NOT categorize yet** - leave in inbox for end-of-day processing
+6. Add frontmatter with `type: journal-entry` and `tags: [journal, inbox]`
+
+**Auto-linking Rules**:
+- Maintain master list from existing folders in `/10-Projects/`
+- Infer from existing project/client names
+- Use both master list and inference for detection
+- Only link if confident match exists
+
+**Example**:
+```
+!journal Fixed data pipeline issue for Acme Corp. Need to follow up tomorrow.
+```
+Creates in inbox:
+```markdown
+[2024-01-15 14:30] Fixed data pipeline issue for [[Acme Corp]]. Need to follow up tomorrow.
+```
+
+**Note**: Entries are processed at end of day and categorized into Work or Personal journals.
+
+---
+
+#### `!log [text]`
+
+**Purpose**: Append work log entry to today's work journal (legacy command, use `!journal` for new entries)
+
+**Action**:
+1. Locate today's note: `/40-Journal/Work/YYYY/YYYY-MM-DD.md` (create if missing)
 2. Append entry under `## ⏱️ Work Log` section
 3. Format: `[HH:MM] [text]`
 4. Auto-link: Detect mentioned clients/projects and wrap in Wikilinks `[[Client Name]]` or `[[Project Name]]`
 
 **Auto-linking Rules**:
-- Maintain master list from existing folders in `/10_Projects/`
+- Maintain master list from existing folders in `/10-Projects/`
 - Infer from existing project/client names
 - Use both master list and inference for detection
 - Only link if confident match exists
@@ -139,6 +228,8 @@ Creates:
 [14:30] Fixed data pipeline issue for [[Acme Corp]]. Need to follow up tomorrow.
 ```
 
+**Note**: Prefer `!journal` for new entries - it allows AI to categorize work vs personal at end of day.
+
 ---
 
 #### `!meeting [Client] [Topic]`
@@ -146,7 +237,7 @@ Creates:
 **Purpose**: Create meeting note for a client
 
 **Action**:
-1. Create file: `/10_Projects/11_Consulting/[Client]/Meetings/YYYY-MM-DD_[Topic].md`
+1. Create file: `/10-Projects/11-Consulting/[Client]/Meetings/YYYY-MM-DD_[Topic].md`
 2. Create `Meetings/` folder if it doesn't exist
 3. Include YAML frontmatter with `type: meeting`
 4. Structure:
@@ -171,21 +262,27 @@ Creates:
 
 #### `!study [Topic]`
 
-**Purpose**: Create deep-dive study note on a topic
+**Purpose**: Create deep-dive study note on a topic (with Zettelkasten linking)
 
 **Action**:
 1. Determine category: Python, PySpark, AWS, Troubleshooting, or Consulting
-2. Create file: `/30_Resources/[Category]/[Topic].md`
+2. Create file: `/30-Resources/[Category]/[Topic].md`
 3. Structure:
    - Quick Reference section at top
    - Typical sections: Overview, Core Concepts, Advanced Patterns, Code Examples, Common Pitfalls, Related Topics
-   - `## Related` section linking 2-3 existing relevant notes
-4. Code examples:
+   - `## Related` section with 5-7 linked notes (enhanced from 2-3)
+4. **Enhanced Linking**:
+   - Search existing notes for related concepts (keywords, tags, similar topics)
+   - Suggest atomic notes that could be created from this topic
+   - Create bidirectional links (add this note to related notes' "## Related" sections)
+   - Link to MOC (Map of Content) for the category if it exists
+5. Code examples:
    - Inline if <50 lines (use code blocks)
    - Separate files in `code/` subfolder if >50 lines
    - Include file path reference in note
-5. Engineer-to-Engineer level depth
-6. Include Python/PySpark code blocks with explanations
+6. Engineer-to-Engineer level depth
+7. Include Python/PySpark code blocks with explanations
+8. **Suggest atomic breakdown**: If topic is complex, suggest breaking into atomic notes
 
 **Code File Naming**: `[Topic]_example_[number].py` or descriptive name
 
@@ -201,8 +298,8 @@ Creates:
 **Purpose**: Scaffold a new project
 
 **Action**:
-1. Determine category: 11_Consulting, 12_PersonalProject, or 13_Life
-2. Create folder: `/10_Projects/[Category]/[Project_Name]/`
+1. Determine category: 11-Consulting, 12-PersonalProject, or 13-Life
+2. Create folder: `/10-Projects/[Category]/[Project_Name]/`
 3. Auto-create:
    - `README.md` with:
      - **Objective:** One-sentence goal
@@ -226,7 +323,7 @@ Creates:
 **Action**:
 1. Analyze error trace for root cause
 2. Extract error name/keywords for filename
-3. Create file: `/30_Resources/Troubleshooting/YYYY-MM-DD_[Error_Name].md`
+3. Create file: `/30-Resources/Troubleshooting/YYYY-MM-DD_[Error_Name].md`
 4. Structure:
    - `> [!bug] Error` callout with error trace
    - Root cause analysis
@@ -249,7 +346,7 @@ Creates:
 **Purpose**: Generate status report for a client
 
 **Action**:
-1. Scan `/90_Journal/` for specified timeframe
+1. Scan `/40-Journal/Work/` and `/40-Journal/Personal/` for specified timeframe
 2. Filter entries containing client tag `#client-name` or Wikilink `[[Client Name]]`
 3. Categorize into: **Shipped**, **In Progress**, **Blockers**
 4. Output: Chat output (mixed format with activity descriptions)
@@ -283,20 +380,28 @@ Creates:
 
 #### `!inbox-process`
 
-**Purpose**: Process items in inbox
+**Purpose**: Process items in inbox (manual trigger for end-of-day processing)
 
 **Action**:
-1. List all items in `/00_Inbox/`
+1. List all items in `/00-Inbox/`
 2. For each item, auto-suggest category based on content:
-   - Project (which category and name)
-   - Resource (which category and topic)
-   - Journal entry (which section)
-   - Area (which area file)
+   - **Work Journal** - Work-related activities
+   - **Personal Journal** - Personal thoughts and activities
+   - **Project** (which category and name)
+   - **Resource** (which category and topic)
+   - **Area** (which area file)
+   - **Idea** - Standalone ideas
+   - **Link** - Web links and bookmarks
 3. User confirms categorization
-4. Move item to appropriate location
+4. Move item to appropriate location:
+   - Journal entries → `/40-Journal/Work/` or `/40-Journal/Personal/`
+   - Other items → Appropriate folders
 5. Create proper structure (frontmatter, links, etc.)
+6. Update daily journal files with categorized entries
 
-**Frequency**: Daily processing
+**Frequency**: Daily processing (can be triggered manually or automated at end of day)
+
+**Note**: This is the same process that happens automatically at end of day, but can be run on-demand.
 
 ---
 
@@ -304,14 +409,16 @@ Creates:
 
 #### `!link [URL] [Description]`
 
-**Purpose**: Save interesting links/articles to journal
+**Purpose**: Save interesting links/articles (categorized at end of day)
 
 **Action**:
-1. Locate today's note: `/90_Journal/YYYY/YYYY-MM-DD.md` (create if missing)
-2. Append entry under `## 🔗 Links` section
-3. Format: `- [Description](URL) - [[related-topic]]` or just URL with description
-4. Auto-detect topic/category and suggest related notes to link
-5. Optionally create a resource note if it's a significant learning resource
+1. Create entry in `/00-Inbox/` with timestamp (will be categorized at end of day)
+2. Format entry as link: `- [Description](URL) - [[related-topic]]`
+3. Auto-detect topic/category and suggest related notes to link
+4. At end of day, AI will:
+   - Add to Work or Personal journal Links section
+   - Or create resource note if it's a significant learning resource
+   - Link to related notes appropriately
 
 **Example**:
 ```
@@ -327,8 +434,8 @@ Creates:
 **Action**:
 1. Determine if code belongs to:
    - Existing project (add to project folder)
-   - Resource topic (add to `/30_Resources/[Category]/`)
-   - Standalone snippet (create in `/30_Resources/[Category]/code/`)
+   - Resource topic (add to `/30-Resources/[Category]/`)
+   - Standalone snippet (create in `/30-Resources/[Category]/code/`)
 2. Create or append to appropriate note
 3. Include:
    - Context/explanation
@@ -348,7 +455,7 @@ Creates:
 **Purpose**: Quick idea capture
 
 **Action**:
-1. Append to today's journal under `## 📝 Notes` section
+1. Create entry in `/00-Inbox/` with timestamp (will be categorized at end of day)
 2. Format: `[HH:MM] 💡 [idea text]`
 3. Auto-suggest:
    - Related projects it might belong to
@@ -369,7 +476,7 @@ Creates:
 
 **Action**:
 1. Determine category:
-   - If technical → `/30_Resources/[Category]/`
+   - If technical → `/30-Resources/[Category]/`
    - If project-related → Project folder
    - If general → Today's journal `## 📝 Notes`
 2. Create note with frontmatter
@@ -392,8 +499,8 @@ Creates:
    - Add to project's `TODO.md` or `Action_Items.md`
    - Link to project
 2. If no project specified:
-   - Add to today's journal under `## ⏱️ Work Log`
-   - Or create in `/00_Inbox/` for later processing
+   - Create in `/00-Inbox/` for end-of-day processing
+   - Will be added to appropriate journal (Work or Personal) at end of day
 3. Format: `- [ ] [Description] (due: YYYY-MM-DD)`
 4. Include due date if provided
 
@@ -408,17 +515,18 @@ Creates:
 
 #### `!today`
 
-**Purpose**: Quick view/summary of today's journal
+**Purpose**: Quick view/summary of today's journals
 
 **Action**:
-1. Open today's journal: `/90_Journal/YYYY/YYYY-MM-DD.md`
-2. Display summary:
-   - Work log entries count
-   - Notes count
-   - Links count
-   - Completed items
+1. Check for both journals:
+   - Work Journal: `/40-Journal/Work/YYYY/YYYY-MM-DD.md`
+   - Personal Journal: `/40-Journal/Personal/YYYY/YYYY-MM-DD.md`
+2. Display summary for each:
+   - Work Journal: Work log entries, notes, links, completed items
+   - Personal Journal: Notes, links, reflections, completed items
 3. Show quick stats and highlights
-4. Optionally suggest next actions
+4. Show inbox items pending processing
+5. Optionally suggest next actions
 
 **Example**:
 ```
@@ -432,7 +540,7 @@ Creates:
 **Purpose**: Check project status
 
 **Action**:
-1. Locate project in `/10_Projects/`
+1. Locate project in `/10-Projects/`
 2. Read project `README.md`
 3. Check:
    - Roadmap progress (checked items)
@@ -457,7 +565,7 @@ Creates:
 **Purpose**: Archive completed projects or notes
 
 **Action**:
-1. Create `/90_Archive/` folder if it doesn't exist
+1. Create `/90-Archive/` folder if it doesn't exist
 2. Move project/note to archive
 3. Update any links pointing to archived item
 4. Add archive tag and date to frontmatter
@@ -465,7 +573,7 @@ Creates:
 
 **Archive Structure**:
 ```
-/90_Archive/
+/90-Archive/
   └─ YYYY/
       └─ [Project_Name]/
 ```
@@ -483,7 +591,7 @@ Creates:
 
 **Action**:
 1. If project specified: Create in project folder
-2. If timeframe specified: Create in `/90_Journal/` or appropriate location
+2. If timeframe specified: Create in `/40-Journal/` or appropriate location
 3. Structure:
    - `## What Went Well`
    - `## What Could Improve`
@@ -550,17 +658,102 @@ Creates:
 
 #### `!link-notes [Note1] [Note2]`
 
-**Purpose**: Link related notes together
+**Purpose**: Link related notes together (enhanced with bidirectional linking)
 
 **Action**:
 1. Locate both notes
 2. Add Wikilink in each note's "## Related" section (or create section)
-3. Ensure bidirectional linking
-4. Update if "## Related" section already exists
+3. **Ensure bidirectional linking** - add link in both directions
+4. Add brief context about why they're linked (optional but recommended)
+5. Update if "## Related" section already exists
+6. Check for link clusters - suggest other related notes that might benefit from linking
 
 **Example**:
 ```
 !link-notes PySpark_Window_Functions PySpark_DataFrames
+```
+
+---
+
+#### `!atomic [Topic] [Content]`
+
+**Purpose**: Create atomic permanent note (Zettelkasten principle)
+
+**Action**:
+1. Determine category: Python, PySpark, AWS, Troubleshooting, or Consulting
+2. Create file: `/30-Resources/[Category]/[Topic].md`
+3. **Atomic principle**: One concept per note - if topic is complex, suggest breaking down
+4. Structure:
+   - Single focused concept/idea
+   - Brief explanation (2-3 paragraphs max)
+   - `## Related` section with 5-10 linked notes (more than study notes)
+   - `## See Also` for related concepts
+5. Frontmatter: `type: atomic` or `type: permanent`
+6. **Enhanced linking**:
+   - Search for existing notes with similar concepts
+   - Suggest connections to related atomic notes
+   - Link to parent study notes if applicable
+   - Link to MOC for category
+7. Add unique identifier: `YYYYMMDD-HHMM-[Topic]` format in frontmatter (optional)
+
+**Example**:
+```
+!atomic PySpark ROW_NUMBER Window Function
+```
+
+---
+
+#### `!moc [Category/Topic]`
+
+**Purpose**: Create or update Map of Content (MOC) - linking hub for a category
+
+**Action**:
+1. Determine if creating new MOC or updating existing
+2. For category MOC: `/80-MOCs/[Category]_MOC.md` or `/80-MOCs/[Category]_Index.md`
+3. Structure:
+   - Overview of the category
+   - `## Atomic Notes` - List all atomic/permanent notes
+   - `## Study Notes` - List comprehensive study notes
+   - `## Concepts` - Grouped by concept clusters
+   - `## Related Categories` - Links to other category MOCs
+4. Scan category folder and auto-populate with links to all notes
+5. Organize by themes/concepts
+6. Update MOC when new notes are added to category
+7. Frontmatter: `type: moc`
+
+**Example**:
+```
+!moc PySpark
+!moc AWS
+```
+
+---
+
+#### `!link-suggest [Note Name]`
+
+**Purpose**: Suggest connections for a note (find related notes to link)
+
+**Action**:
+1. Locate the note
+2. Analyze content for:
+   - Keywords and concepts
+   - Tags
+   - Similar topics
+3. Search vault for:
+   - Notes with similar tags
+   - Notes mentioning similar concepts
+   - Notes in same category
+   - Notes with related keywords
+4. Display suggestions with:
+   - Note name and path
+   - Relevance score/reason
+   - Suggested link context
+5. User confirms which links to add
+6. Create bidirectional links for confirmed suggestions
+
+**Example**:
+```
+!link-suggest PySpark_Window_Functions
 ```
 
 ---
@@ -587,6 +780,91 @@ Creates:
 
 ---
 
+#### `!brainstorm [Topic]`
+
+**Purpose**: Start an interactive brainstorming session with AI
+
+**Action**:
+1. Initiate conversational brainstorming session on the topic
+2. Engage in back-and-forth discussion:
+   - Generate ideas
+   - Explore possibilities
+   - Refine concepts
+   - Ask follow-up questions
+3. **Session End**: When user indicates completion (e.g., "done", "that's enough", or explicit end)
+4. **Create Summary Note**:
+   - Determine appropriate location:
+     - If project-related → `/10-Projects/[Category]/[Project]/Brainstorm_[Topic].md`
+     - If knowledge-related → `/30-Resources/[Category]/Brainstorm_[Topic].md`
+     - If general → `/00-Inbox/Brainstorm_[Topic].md` for later processing
+   - Structure:
+     - **Topic**: The brainstorming topic
+     - **Date**: Session date
+     - **Key Ideas**: Summary of main ideas generated
+     - **Explored Concepts**: Concepts discussed
+     - **Next Steps**: Actionable items or follow-ups
+     - **Session Notes**: Condensed conversation summary
+   - Include YAML frontmatter: `type: brainstorm`
+   - Link to:
+     - Related projects (if applicable)
+     - Related resources/concepts
+     - Related ideas from journal
+5. **Bidirectional Linking**: Add link to this brainstorm in related notes
+
+**Example**:
+```
+!brainstorm New feature for Personal Project
+[AI engages in brainstorming...]
+User: That's enough, thanks
+[AI creates summary note and links appropriately]
+```
+
+---
+
+#### `!ask [Question/Topic]`
+
+**Purpose**: Ask AI a question and have an interactive Q&A session
+
+**Action**:
+1. Initiate conversational Q&A session
+2. Engage in discussion:
+   - Answer the question
+   - Provide follow-up information
+   - Ask clarifying questions if needed
+   - Explore related topics
+3. **Session End**: When user indicates completion or question is fully answered
+4. **Create Summary Note**:
+   - Determine appropriate location:
+     - If technical/knowledge → `/30-Resources/[Category]/Q&A_[Topic].md`
+     - If project-related → `/10-Projects/[Category]/[Project]/Q&A_[Topic].md`
+     - If general → `/00-Inbox/Q&A_[Topic].md` for later processing
+   - Structure:
+     - **Question**: The original question
+     - **Date**: Session date
+     - **Answer Summary**: Key points from the answer
+     - **Key Insights**: Important insights or learnings
+     - **Related Topics**: Topics discussed
+     - **Follow-up Questions**: Potential follow-ups
+     - **Session Notes**: Condensed Q&A summary
+   - Include YAML frontmatter: `type: qa` or `type: question`
+   - Link to:
+     - Related study notes
+     - Related concepts
+     - Related resources
+     - MOCs if applicable
+5. **Bidirectional Linking**: Add link to this Q&A in related notes
+6. **Knowledge Extraction**: If answer contains new knowledge, suggest creating atomic or study notes
+
+**Example**:
+```
+!ask How do I optimize PySpark joins?
+[AI provides answer and discusses...]
+User: Got it, thanks
+[AI creates summary note, links to PySpark resources, suggests creating study note if needed]
+```
+
+---
+
 #### `!help [Command Name]`
 
 **Purpose**: Display all available commands or help for specific command
@@ -603,6 +881,8 @@ Creates:
    - Capture Commands (link, code, idea, note, task)
    - Management Commands (today, status, archive, review)
    - Discovery Commands (search, tag, link-notes, summary)
+   - Zettelkasten Commands (atomic, moc, link-suggest)
+   - AI Interaction Commands (brainstorm, ask)
 
 **Output Format**:
 - Chat output (formatted markdown)
@@ -627,24 +907,61 @@ Creates:
 - Master list updated as new projects/clients are created
 
 ### End of Day Processing
-1. Open today's journal: `/90_Journal/YYYY/YYYY-MM-DD.md`
-2. Process each section:
-   - **Work Log**: Extract tasks, link to projects/clients, move actionable items
-   - **Notes**: Categorize into Resources, Areas, or Projects
-   - **Links**: Create resource notes or add to existing topics
-   - **Completed**: Archive or link to completed projects
-3. Ensure proper:
-   - Wikilinks to related notes
+
+**Step 1: Process Inbox**
+1. Scan all items in `/00-Inbox/`
+2. For each item, determine category:
+   - **Work Journal**: Work-related activities, client mentions, project work, technical tasks
+   - **Personal Journal**: Personal thoughts, life events, non-work activities, reflections
+   - **Resources**: Knowledge, concepts, study materials
+   - **Projects**: Project-specific items
+   - **Areas**: Area-related maintenance items
+   - **Ideas**: Standalone ideas (can become projects or resources)
+   - **Links**: Web links and bookmarks
+3. **Categorization Logic**:
+   - Work indicators: Client names, project names, technical terms, work tasks
+   - Personal indicators: Personal pronouns, life events, non-work activities, emotions
+   - If ambiguous, ask user or default to Personal
+
+**Step 2: Create/Update Daily Journals**
+1. **Work Journal**: `/40-Journal/Work/YYYY/YYYY-MM-DD.md`
+   - Process work-related entries from inbox
+   - Organize into: Work Log, Notes, Links, Completed
+   - Link to projects/clients mentioned
+   - Extract actionable items to project TODOs
+2. **Personal Journal**: `/40-Journal/Personal/YYYY/YYYY-MM-DD.md`
+   - Process personal entries from inbox
+   - Organize into: Notes, Links, Reflections, Completed
+   - Link to areas if relevant
+   - Extract goals or area updates
+
+**Step 3: Process Other Inbox Items**
+1. **Resources**: Move to `/30-Resources/[Category]/` with proper structure
+2. **Projects**: Add to project folders or create new projects
+3. **Areas**: Update area files in `/20-Areas/[Area]/`
+4. **Ideas**: Move to appropriate location or suggest creating project/study note
+5. **Links**: Add to journal Links section or create resource note if significant
+
+**Step 4: Zettelkasten Linking Enhancement**
+1. For new notes in `/30-Resources/`, suggest connections to existing notes
+2. Check for orphaned notes (notes with no links) and suggest connections
+3. Update MOCs if new notes were added to categories
+4. Ensure bidirectional linking is maintained
+
+**Step 5: Final Cleanup**
+1. Ensure proper:
+   - Wikilinks to related notes (bidirectional when possible)
    - Frontmatter with correct tags
    - Organization in correct folders
-4. Clean up journal: Keep summary, move detailed content to proper notes
+2. Clean up inbox: Move processed items or archive
+3. Create summary of processing actions taken
 
 ---
 
 ## Master List Management
 
 ### Client/Project Detection
-1. **Source 1**: Scan `/10_Projects/` folders to build master list
+1. **Source 1**: Scan `/10-Projects/` folders to build master list
 2. **Source 2**: Infer from existing notes and links
 3. **Update**: When new projects/clients created, add to master list
 4. **Storage**: Maintain in memory or reference from folder structure
@@ -676,7 +993,7 @@ Creates:
 
 ### Journal
 - Format: `YYYY-MM-DD.md`
-- Location: `/90_Journal/YYYY/YYYY-MM-DD.md`
+- Location: `/40-Journal/Work/YYYY/YYYY-MM-DD.md` or `/40-Journal/Personal/YYYY/YYYY-MM-DD.md`
 
 ---
 
@@ -697,11 +1014,13 @@ Creates:
 
 ## Areas Management
 
-### `/20_Areas/` Files
-- **Career.md**: Professional development, career goals, skill tracking
-- **Health.md**: Exercise routines, medical records, wellness goals
-- **Hobbies.md**: Personal hobby projects and interests
-- **Languages.md**: Language learning progress and resources
+### `/20-Areas/` Structure
+- **Career/Career.md**: Professional development, career goals, skill tracking
+- **Health/Health.md**: Exercise routines, medical records, wellness goals
+- **Hobbies/Hobbies.md**: Personal hobby projects and interests
+- **Languages/Languages.md**: Language learning progress and resources
+
+Each area has its own subfolder, allowing for expansion with additional related files if needed.
 
 ### Area File Structure
 - Long-term maintenance items
@@ -746,18 +1065,109 @@ Creates:
 
 ---
 
+## Zettelkasten Principles & Linking Strategy
+
+### Core Principles Applied to `/30-Resources/`
+
+1. **Atomic Notes**
+   - One concept per note
+   - Each note should be independently understandable
+   - Break down complex topics into atomic pieces
+   - Use `!atomic` command for permanent knowledge
+
+2. **Rich Linking**
+   - Aim for 5-10 links per note (more than traditional 2-3)
+   - Bidirectional linking: Always link both ways
+   - Link clusters: Connect related concepts
+   - Contextual links: Explain why notes are related
+
+3. **Emergent Organization**
+   - Knowledge emerges from connections, not folders
+   - Categories are entry points, not strict boundaries
+   - Cross-category linking is encouraged
+   - MOCs (Maps of Content) help navigate but don't restrict
+
+4. **Permanent Notes**
+   - Evergreen knowledge that doesn't expire
+   - Distinguish from temporary/project-specific notes
+   - Focus on concepts, not events
+   - Update and refine over time
+
+### Linking Strategy
+
+**When Creating Notes:**
+1. Search for existing notes with similar concepts
+2. Link to parent concepts (broader topics)
+3. Link to child concepts (specific details)
+4. Link to related concepts (sibling topics)
+5. Link to MOC for category navigation
+
+**Link Types:**
+- **Parent Links**: Broader concepts (e.g., "PySpark Window Functions" → "PySpark")
+- **Child Links**: Specific details (e.g., "PySpark" → "PySpark Window Functions")
+- **Sibling Links**: Related concepts (e.g., "PySpark Window Functions" ↔ "PySpark Aggregations")
+- **Cross-Category Links**: Concepts spanning categories (e.g., "PySpark" ↔ "AWS EMR")
+
+**Link Context:**
+When adding links, optionally add context:
+```markdown
+## Related
+- [[PySpark Aggregations]] - Similar transformation operations
+- [[SQL Window Functions]] - SQL equivalent concept
+- [[PySpark Performance]] - Performance considerations for window functions
+```
+
+**Orphaned Notes:**
+- Notes with no links are "orphaned"
+- Use `!link-suggest` to find connections
+- End-of-day processing should identify and suggest links for orphaned notes
+
+### MOC (Map of Content) Strategy
+
+**Purpose:**
+- Navigation hub for a category
+- Overview of knowledge in that domain
+- Entry point for exploring related concepts
+
+**Structure:**
+- Group notes by themes/concepts
+- Show relationships between notes
+- Link to other category MOCs
+- Auto-update when new notes added
+
+**When to Create:**
+- When category has 10+ notes
+- When knowledge base grows complex
+- When user requests overview of category
+
+---
+
 ## Best Practices
 
 1. **Always use Wikilinks** - Never standard Markdown links
 2. **Include frontmatter** - Every new note needs YAML
-3. **Auto-link intelligently** - Only when confident match exists
-4. **Maintain structure** - Follow folder hierarchy strictly
-5. **Update master list** - Keep client/project list current
-6. **Process daily** - End-of-day categorization is critical
-7. **Preserve context** - When moving content, maintain links and references
-8. **Ask before creating** - Confirm new projects/clients before creation
-9. **Use callouts** - Enhance readability with Obsidian callouts
-10. **Code organization** - Separate files for >50 lines, inline for smaller
+3. **Use templates** - Reference `/.metadata/Templates/` for consistent structure
+4. **Auto-link intelligently** - Only when confident match exists
+5. **Maintain structure** - Follow folder hierarchy strictly (PARA for Projects/Areas)
+6. **Update master list** - Keep client/project list current
+7. **Process daily** - End-of-day categorization is critical
+8. **Preserve context** - When moving content, maintain links and references
+9. **Ask before creating** - Confirm new projects/clients before creation
+10. **Use callouts** - Enhance readability with Obsidian callouts
+11. **Code organization** - Separate files for >50 lines, inline for smaller
+
+### Zettelkasten-Specific Best Practices
+
+11. **Bidirectional linking** - Always link both ways when connecting notes
+12. **Rich linking** - Aim for 5-10 links per knowledge note (not just 2-3)
+13. **Link context** - Add brief explanations for why notes are related
+14. **Atomic notes** - Break complex topics into single-concept notes
+15. **Update MOCs** - Keep Maps of Content current when adding notes
+16. **Find orphans** - Identify and link orphaned notes during processing
+17. **Cross-category links** - Don't restrict linking to same category
+18. **Link clusters** - Create networks of related concepts
+19. **Suggest connections** - Proactively suggest links when creating notes
+20. **Refine over time** - Update permanent notes as knowledge evolves
 
 ---
 
@@ -783,7 +1193,23 @@ AI: [Creates deep-dive note in Resources/AWS/, includes code examples, links to 
 
 ### Example 4: End of Day Processing
 ```
-AI: [Scans today's journal, categorizes entries, moves to appropriate notes, updates links]
+AI: [Scans inbox, categorizes entries into Work/Personal journals and other folders, creates/updates daily journals, links appropriately]
+```
+
+### Example 5: Brainstorming Session
+```
+User: !brainstorm New feature for analytics dashboard
+AI: [Engages in brainstorming conversation...]
+User: That's enough, thanks
+AI: [Creates summary note in appropriate location, links to related projects/resources]
+```
+
+### Example 6: Q&A Session
+```
+User: !ask How do I optimize PySpark joins?
+AI: [Provides answer and discusses...]
+User: Got it, thanks
+AI: [Creates Q&A summary note, links to PySpark resources, suggests creating study note if needed]
 ```
 
 ---
@@ -798,6 +1224,41 @@ AI: [Scans today's journal, categorizes entries, moves to appropriate notes, upd
 - Be proactive in suggesting improvements to organization
 - Use the `!` prefix for all commands to avoid conflicts
 - When in doubt, ask the user for clarification rather than making assumptions
+
+### AI Interaction Sessions (`!brainstorm`, `!ask`)
+
+**Session Management**:
+- Engage naturally in conversation
+- Ask clarifying questions when needed
+- Provide thoughtful, detailed responses
+- Continue until user indicates completion
+
+**Session End Detection**:
+- User says "done", "that's enough", "thanks", "got it", etc.
+- User asks a new question (ends previous session)
+- User uses a different command (ends previous session)
+- Explicit "end session" or similar
+
+**Post-Session Actions**:
+1. **Summarize**: Create concise summary of key points
+2. **Create Note**: Use appropriate template (Brainstorm.md or Q&A.md)
+3. **Determine Location**:
+   - Project-related → Project folder
+   - Knowledge-related → Resources category
+   - General → Inbox for processing
+4. **Link Appropriately**:
+   - Link to related notes (projects, resources, concepts)
+   - Create bidirectional links
+   - Link to MOCs if applicable
+5. **Extract Knowledge**: If session revealed new knowledge, suggest creating study/atomic notes
+6. **Action Items**: Extract any actionable items and link to projects/todos
+
+**Best Practices for Sessions**:
+- Be thorough but concise in summaries
+- Focus on actionable insights
+- Preserve important context
+- Link to existing knowledge base
+- Suggest follow-ups if appropriate
 
 ---
 

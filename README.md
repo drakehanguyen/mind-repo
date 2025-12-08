@@ -6,8 +6,10 @@ A conversational AI-powered "Second Brain" system for Data Engineer Consultants.
 
 MindRepo helps you capture, organize, and retrieve:
 - **Consulting Log**: Billable work, client meetings, project status
-- **Knowledge Base**: Engineering (Python, PySpark, AWS) and personal knowledge
+- **Knowledge Base**: Engineering (Python, PySpark, AWS) and personal knowledge (using Zettelkasten principles for rich linking)
 - **Daily Journal**: Work logs, notes, links, and completed tasks
+
+**Knowledge Management**: Hybrid PARA + Zettelkasten approach - PARA for action management, Zettelkasten for knowledge discovery through rich linking.
 
 ## Quick Start
 
@@ -26,12 +28,14 @@ See [[AGENT.md]] for all available commands and complete AI agent instructions (
 
 ### Folder Structure
 
-- **`/00_Inbox`** - Raw thoughts and unprocessed items
-- **`/10_Projects`** - Active projects (Consulting, PersonalProject, Life)
-- **`/20_Areas`** - Long-term maintenance (Career, Health, Hobbies, Languages)
-- **`/30_Resources`** - Permanent knowledge base (Python, PySpark, AWS, etc.)
-- **`/90_Journal`** - Daily chronological entries
-- **`/00_Meta`** - System documentation and templates
+- **`/00-Inbox`** - Raw thoughts and unprocessed items
+- **`/10-Projects`** - Active projects (Consulting, PersonalProject, Life)
+- **`/20-Areas`** - Long-term maintenance (Career, Health, Hobbies, Languages)
+- **`/30-Resources`** - Permanent knowledge base (Python, PySpark, AWS, etc.)
+- **`/40-Journal`** - Daily chronological entries (Work and Personal folders)
+- **`/80-MOCs`** - Maps of Content (category navigation hubs)
+- **`/90-Archive`** - Archived projects and documents
+- **`/.metadata`** - System documentation and templates
 
 ## Documentation
 

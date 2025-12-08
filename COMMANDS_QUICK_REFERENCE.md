@@ -6,7 +6,8 @@ All available commands at a glance (use `!` prefix).
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `!log [text]` | Log work activity | `!log Fixed pipeline issue` |
+| `!journal [text]` | Add journal entry (categorized at end of day) | `!journal Fixed pipeline issue` |
+| `!log [text]` | Log work activity (legacy, direct to work journal) | `!log Fixed pipeline issue` |
 | `!meeting [Client] [Topic]` | Create meeting note | `!meeting Acme Corp Review` |
 | `!study [Topic]` | Create study note | `!study PySpark Windows` |
 | `!plan [Project]` | Scaffold project | `!plan New Dashboard` |
@@ -19,9 +20,10 @@ All available commands at a glance (use `!` prefix).
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `!link [URL] [Desc]` | Save link | `!link https://... Article` |
+| `!journal [text]` | Add journal entry (categorized at end of day) | `!journal Worked on pipeline` |
+| `!link [URL] [Desc]` | Save link (categorized at end of day) | `!link https://... Article` |
 | `!code [Desc] [Code]` | Save code | `!code Example [code]` |
-| `!idea [Text]` | Capture idea | `!idea Build tool` |
+| `!idea [Text]` | Capture idea (categorized at end of day) | `!idea Build tool` |
 | `!note [Topic] [Content]` | Quick note | `!note Topic Content` |
 | `!task [Desc] [Project] [Due]` | Create task | `!task Review PR Acme 2024-01-15` |
 
@@ -38,6 +40,21 @@ All available commands at a glance (use `!` prefix).
 | `!link-notes [N1] [N2]` | Link notes | `!link-notes Note1 Note2` |
 | `!summary [Note]` | Generate summary | `!summary Project Name` |
 
+## Zettelkasten Commands
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `!atomic [Topic]` | Create atomic permanent note | `!atomic PySpark ROW_NUMBER` |
+| `!moc [Category]` | Create/update Map of Content | `!moc PySpark` |
+| `!link-suggest [Note]` | Suggest connections for note | `!link-suggest PySpark_Windows` |
+
+## AI Interaction Commands
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `!brainstorm [Topic]` | Brainstorm with AI | `!brainstorm New feature ideas` |
+| `!ask [Question]` | Ask AI a question | `!ask How to optimize PySpark?` |
+
 ## Help Command
 
 | Command | Purpose | Example |
@@ -50,9 +67,10 @@ All available commands at a glance (use `!` prefix).
 ## Command Categories
 
 ### 📝 **Logging & Capture**
-- `!log` - Work log entries
-- `!link` - Save links
-- `!idea` - Quick ideas
+- `!journal` - Journal entries (categorized Work/Personal at end of day)
+- `!log` - Work log entries (legacy, direct to work journal)
+- `!link` - Save links (categorized at end of day)
+- `!idea` - Quick ideas (categorized at end of day)
 - `!note` - General notes
 - `!code` - Code snippets
 
@@ -77,6 +95,15 @@ All available commands at a glance (use `!` prefix).
 - `!tag` - Add tags
 - `!refactor` - Clean up text
 - `!inbox-process` - Organize inbox
+
+### 🧠 **Zettelkasten (Knowledge Linking)**
+- `!atomic` - Create atomic permanent notes
+- `!moc` - Create Maps of Content
+- `!link-suggest` - Find connections for notes
+
+### 🤖 **AI Interaction**
+- `!brainstorm` - Brainstorm with AI (creates summary note)
+- `!ask` - Ask AI questions (creates Q&A note)
 
 ---
 
