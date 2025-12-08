@@ -27,7 +27,7 @@ See [[00_Meta/COMMANDS.md]] for all available commands (use `!` prefix).
 ### Folder Structure
 
 - **`/00_Inbox`** - Raw thoughts and unprocessed items
-- **`/10_Projects`** - Active projects (Consulting, DevPockit, Life)
+- **`/10_Projects`** - Active projects (Consulting, PersonalProject, Life)
 - **`/20_Areas`** - Long-term maintenance (Career, Health, Hobbies, Languages)
 - **`/30_Resources`** - Permanent knowledge base (Python, PySpark, AWS, etc.)
 - **`/90_Journal`** - Daily chronological entries

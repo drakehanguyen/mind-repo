@@ -22,7 +22,7 @@ MindRepo is a conversational AI-powered "Second Brain" system for a Data Enginee
   │       ├─ README.md (auto-created)
   │       ├─ Meetings/ (auto-created)
   │       └─ TODO.md or Action_Items.md (auto-created)
-  ├─ 12_DevPockit/
+  ├─ 12_PersonalProject/
   │   └─ [Project_Name]/ (same structure)
   └─ 13_Life/
       └─ [Project_Name]/ (same structure)
@@ -199,7 +199,7 @@ Creates:
 **Purpose**: Scaffold a new project
 
 **Action**:
-1. Determine category: 11_Consulting, 12_DevPockit, or 13_Life
+1. Determine category: 11_Consulting, 12_PersonalProject, or 13_Life
 2. Create folder: `/10_Projects/[Category]/[Project_Name]/`
 3. Auto-create:
    - `README.md` with:
@@ -758,19 +758,19 @@ Creates:
 
 ### Example 1: Daily Log Entry
 ```
-User: /log Fixed bug in data pipeline for Acme Corp. Need to deploy tomorrow.
+User: !log Fixed bug in data pipeline for Acme Corp. Need to deploy tomorrow.
 AI: [Appends to journal with auto-linking]
 ```
 
 ### Example 2: Meeting Note
 ```
-User: /meeting Acme Corp Q1 Planning
+User: !meeting Acme Corp Q1 Planning
 AI: [Creates meeting note, links to project, structures with sections]
 ```
 
 ### Example 3: Study Note
 ```
-User: /study AWS S3 Best Practices
+User: !study AWS S3 Best Practices
 AI: [Creates deep-dive note in Resources/AWS/, includes code examples, links to related notes]
 ```
 

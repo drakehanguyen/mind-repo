@@ -73,7 +73,7 @@ Quick reference guide for all commands available in MindRepo (use `!` prefix).
 
 **Example**:
 ```
-!plan DevPockit Analytics Module
+!plan PersonalProject Analytics Module
 ```
 
 ---
@@ -227,7 +227,7 @@ Quick reference guide for all commands available in MindRepo (use `!` prefix).
 
 **Example**:
 ```
-!task Deploy new pipeline to production DevPockit 2024-01-20
+!task Deploy new pipeline to production PersonalProject 2024-01-20
 ```
 
 ---
@@ -264,7 +264,7 @@ Quick reference guide for all commands available in MindRepo (use `!` prefix).
 
 **Example**:
 ```
-!status DevPockit Analytics Module
+!status PersonalProject Analytics Module
 ```
 
 ---
