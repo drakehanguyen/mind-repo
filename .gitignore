@@ -1,10 +1,10 @@
 # Obsidian
-# .obsidian/workspace.json
-# .obsidian/workspace-mobile.json
-# .obsidian/hotkeys.json
-# .obsidian/appearance.json
-# .obsidian/graph.json
-# .obsidian/community-plugins.json
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/hotkeys.json
+.obsidian/appearance.json
+.obsidian/graph.json
+.obsidian/community-plugins.json
 
 # OS
 .DS_Store
@@ -14,9 +14,3 @@ Thumbs.db
 *.tmp
 *.swp
 *~
-
-# Personal data (if you want to keep some files private)
-# Uncomment and add patterns as needed
-# /90_Journal/**/*.md
-# /10_Projects/**/Meetings/*.md
-
