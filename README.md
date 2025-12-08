@@ -13,7 +13,7 @@ MindRepo helps you capture, organize, and retrieve:
 
 ### Commands
 
-See [[00_Meta/COMMANDS.md]] for all available commands (use `!` prefix).
+See [[AGENT.md]] for all available commands and complete AI agent instructions (use `!` prefix).
 
 **Quick help**: `!help` - Show all commands
 
@@ -35,8 +35,8 @@ See [[00_Meta/COMMANDS.md]] for all available commands (use `!` prefix).
 
 ## Documentation
 
-- [[00_Meta/COMMANDS.md]] - Command reference
-- [[00_Meta/SYSTEM_INSTRUCTIONS.md]] - Technical specifications for AI agents
+- [[AGENT.md]] - Complete AI agent instructions (replaces COMMANDS.md and SYSTEM_INSTRUCTIONS.md)
+- [[COMMANDS_QUICK_REFERENCE.md]] - Quick command lookup
 
 ## Getting Started
 

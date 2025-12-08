@@ -1,10 +1,12 @@
-# MindRepo System Instructions
+# MindRepo AI Agent Instructions
 
 ## Overview
 
-MindRepo is a conversational AI-powered "Second Brain" system for a Data Engineer Consultant. The system captures logs, thoughts, journals, learning, work, and planning throughout the day, then processes and categorizes entries at end of day. It also supports deep conversations for study, planning, and brainstorming with automatic note generation.
+MindRepo is a conversational AI-powered "Second Brain" system designed for knowledge workers (originally for Data Engineer Consultants). The system captures logs, thoughts, journals, learning, work, and planning throughout the day, then processes and categorizes entries at end of day. It also supports deep conversations for study, planning, and brainstorming with automatic note generation.
 
 **Core Principle**: The AI agent acts as an intelligent assistant that helps organize information into a structured knowledge repository using Obsidian-compatible Markdown with Wikilinks.
+
+**Command Prefix**: All commands use the `!` prefix to avoid conflicts with AI agent internal commands.
 
 ---
 
@@ -56,8 +58,6 @@ MindRepo is a conversational AI-powered "Second Brain" system for a Data Enginee
       └─ [Archived_Items]/
 
 /00_Meta/
-  ├─ SYSTEM_INSTRUCTIONS.md (this file)
-  ├─ COMMANDS.md (command reference)
   └─ Templates/ (templates to be created)
 ```
 
@@ -77,7 +77,7 @@ Every new note MUST have YAML frontmatter:
 ```yaml
 ---
 created: YYYY-MM-DD
-type: [daily, concept, project, meeting, error, study, plan]
+type: [daily, concept, project, meeting, error, study, plan, review, task, idea, code, link, area]
 tags: [kebab-case, multiple-tags]
 ---
 ```
@@ -112,7 +112,9 @@ Use Obsidian callouts for emphasis:
 
 ## Commands Specification
 
-### Command: `!log [text]`
+### Core Commands
+
+#### `!log [text]`
 
 **Purpose**: Append work log entry to today's journal
 
@@ -139,7 +141,7 @@ Creates:
 
 ---
 
-### Command: `!meeting [Client] [Topic]`
+#### `!meeting [Client] [Topic]`
 
 **Purpose**: Create meeting note for a client
 
@@ -167,7 +169,7 @@ Creates:
 
 ---
 
-### Command: `!study [Topic]`
+#### `!study [Topic]`
 
 **Purpose**: Create deep-dive study note on a topic
 
@@ -194,7 +196,7 @@ Creates:
 
 ---
 
-### Command: `!plan [Project Name]`
+#### `!plan [Project Name]`
 
 **Purpose**: Scaffold a new project
 
@@ -217,7 +219,7 @@ Creates:
 
 ---
 
-### Command: `!debug [Error Trace]`
+#### `!debug [Error Trace]`
 
 **Purpose**: Create error troubleshooting note
 
@@ -242,7 +244,7 @@ Creates:
 
 ---
 
-### Command: `!report [Client] [Timeframe]`
+#### `!report [Client] [Timeframe]`
 
 **Purpose**: Generate status report for a client
 
@@ -262,7 +264,7 @@ Creates:
 
 ---
 
-### Command: `!refactor [selected text]`
+#### `!refactor [selected text]`
 
 **Purpose**: Clean up and restructure selected text
 
@@ -279,7 +281,7 @@ Creates:
 
 ---
 
-### Command: `!inbox-process`
+#### `!inbox-process`
 
 **Purpose**: Process items in inbox
 
@@ -298,7 +300,9 @@ Creates:
 
 ---
 
-### Command: `!link [URL] [Description]`
+### Capture Commands
+
+#### `!link [URL] [Description]`
 
 **Purpose**: Save interesting links/articles to journal
 
@@ -316,7 +320,7 @@ Creates:
 
 ---
 
-### Command: `!code [Description] [Code Block]`
+#### `!code [Description] [Code Block]`
 
 **Purpose**: Save code snippets with context
 
@@ -339,7 +343,7 @@ Creates:
 
 ---
 
-### Command: `!idea [Text]`
+#### `!idea [Text]`
 
 **Purpose**: Quick idea capture
 
@@ -359,7 +363,27 @@ Creates:
 
 ---
 
-### Command: `!task [Description] [Project/Client] [Due Date]`
+#### `!note [Topic] [Content]`
+
+**Purpose**: Quick note capture without specific structure
+
+**Action**:
+1. Determine category:
+   - If technical → `/30_Resources/[Category]/`
+   - If project-related → Project folder
+   - If general → Today's journal `## 📝 Notes`
+2. Create note with frontmatter
+3. Add content with basic structure
+4. Auto-link to related notes
+
+**Example**:
+```
+!note AWS S3 pricing changes Important update about S3 pricing structure...
+```
+
+---
+
+#### `!task [Description] [Project/Client] [Due Date]`
 
 **Purpose**: Create standalone task
 
@@ -380,7 +404,9 @@ Creates:
 
 ---
 
-### Command: `!today`
+### Management Commands
+
+#### `!today`
 
 **Purpose**: Quick view/summary of today's journal
 
@@ -401,7 +427,7 @@ Creates:
 
 ---
 
-### Command: `!status [Project Name]`
+#### `!status [Project Name]`
 
 **Purpose**: Check project status
 
@@ -426,7 +452,7 @@ Creates:
 
 ---
 
-### Command: `!archive [Project/Note Name]`
+#### `!archive [Project/Note Name]`
 
 **Purpose**: Archive completed projects or notes
 
@@ -451,27 +477,7 @@ Creates:
 
 ---
 
-### Command: `!note [Topic] [Content]`
-
-**Purpose**: Quick note capture without specific structure
-
-**Action**:
-1. Determine category:
-   - If technical → `/30_Resources/[Category]/`
-   - If project-related → Project folder
-   - If general → Today's journal `## 📝 Notes`
-2. Create note with frontmatter
-3. Add content with basic structure
-4. Auto-link to related notes
-
-**Example**:
-```
-!note AWS S3 pricing changes Important update about S3 pricing structure...
-```
-
----
-
-### Command: `!review [Project/Timeframe]`
+#### `!review [Project/Timeframe]`
 
 **Purpose**: Create review/retrospective note
 
@@ -494,7 +500,9 @@ Creates:
 
 ---
 
-### Command: `!search [Query]`
+### Discovery Commands
+
+#### `!search [Query]`
 
 **Purpose**: Search across the vault
 
@@ -522,7 +530,7 @@ Creates:
 
 ---
 
-### Command: `!tag [Note Name] [Tags]`
+#### `!tag [Note Name] [Tags]`
 
 **Purpose**: Add tags to existing notes
 
@@ -540,7 +548,7 @@ Creates:
 
 ---
 
-### Command: `!link-notes [Note1] [Note2]`
+#### `!link-notes [Note1] [Note2]`
 
 **Purpose**: Link related notes together
 
@@ -557,7 +565,7 @@ Creates:
 
 ---
 
-### Command: `!summary [Note/Project Name]`
+#### `!summary [Note/Project Name]`
 
 **Purpose**: Generate summary of a note or project
 
@@ -579,7 +587,7 @@ Creates:
 
 ---
 
-### Command: `!help [Command Name]`
+#### `!help [Command Name]`
 
 **Purpose**: Display all available commands or help for specific command
 
@@ -590,7 +598,6 @@ Creates:
    - Command name and brief description
    - Usage syntax
    - Quick example
-   - Link to full documentation
 4. Organize by categories:
    - Core Commands (log, meeting, study, plan, debug, report, refactor, inbox-process)
    - Capture Commands (link, code, idea, note, task)
@@ -781,13 +788,6 @@ AI: [Scans today's journal, categorizes entries, moves to appropriate notes, upd
 
 ---
 
-## Version
-
-**Last Updated**: 2024-01-XX
-**Version**: 1.0
-
----
-
 ## Notes for AI Agents
 
 - This system is designed to be conversational and helpful
@@ -796,4 +796,13 @@ AI: [Scans today's journal, categorizes entries, moves to appropriate notes, upd
 - Prioritize user's workflow and preferences
 - Learn from existing notes to improve auto-linking and categorization
 - Be proactive in suggesting improvements to organization
+- Use the `!` prefix for all commands to avoid conflicts
+- When in doubt, ask the user for clarification rather than making assumptions
+
+---
+
+## Version
+
+**Last Updated**: 2024-01-XX
+**Version**: 1.0
 

@@ -80,12 +80,10 @@ All available commands at a glance (use `!` prefix).
 
 ---
 
----
-
 ## Getting Help
 
 - `!help` - Show all commands
 - `!help [command]` - Detailed help for specific command
 
-**Full Documentation**: See [[COMMANDS.md]] for detailed usage and [[SYSTEM_INSTRUCTIONS.md]] for technical specs.
+**Full Documentation**: See [[AGENT.md]] for complete AI agent instructions (replaces COMMANDS.md and SYSTEM_INSTRUCTIONS.md).
 
