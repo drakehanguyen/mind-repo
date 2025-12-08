@@ -1,10 +1,10 @@
 # Obsidian
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
-.obsidian/hotkeys.json
-.obsidian/appearance.json
-.obsidian/graph.json
-.obsidian/community-plugins.json
+# .obsidian/workspace.json
+# .obsidian/workspace-mobile.json
+# .obsidian/hotkeys.json
+# .obsidian/appearance.json
+# .obsidian/graph.json
+# .obsidian/community-plugins.json
 
 # OS
 .DS_Store
