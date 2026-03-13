@@ -67,6 +67,8 @@ Full documentation: [[AGENT.md]]
 | `!status [Project]` | Project status from README + recent journals |
 | `!archive [Item]` | Move to `/90-Archive/YYYY/` |
 | `!review [Project/Time]` | Create retrospective note |
+| `!update` | Pull latest framework updates from the template repo |
+| `!remote` | Start a Claude Remote Control session (connect from phone) |
 
 ### Discovery
 
@@ -170,6 +172,26 @@ When journal entries mention clients or projects:
 - Wrap confident matches in Wikilinks: `[[Client Name]]`
 - Only link if confident — never guess
 - Ask user before creating new project/client entries
+
+---
+
+## Remote Access
+
+Use Claude Code from your phone or any browser via **Remote Control**.
+
+**Start a session:**
+```bash
+bash scripts/remote.sh
+# or inside Claude Code:
+/remote-control
+```
+
+A QR code appears in the terminal. Scan it with the Claude app (iOS/Android) or open the session URL at claude.ai/code. Claude Code keeps running locally — files never leave your machine.
+
+**To enable for every session automatically:**
+Type `/config` inside Claude Code → set "Enable Remote Control for all sessions" to `true`.
+
+**Requirements:** Claude Code v2.1.51+, Pro/Max/Team/Enterprise subscription.
 
 ---
 

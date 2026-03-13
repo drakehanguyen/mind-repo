@@ -34,6 +34,8 @@ All available commands at a glance (use `!` prefix).
 | `!status [Project]` | Check project status | `!status Acme Project` |
 | `!archive [Item]` | Archive item | `!archive Old Project` |
 | `!review [Project/Time]` | Create review/retro | `!review last month` |
+| `!update` | Pull framework updates from template repo | `!update` |
+| `!remote` | Start Remote Control session (connect from phone) | `!remote` |
 
 ## Discovery Commands
 
@@ -108,6 +110,10 @@ All available commands at a glance (use `!` prefix).
 ### 🤖 AI Interaction
 - `!brainstorm` — Brainstorm with AI (creates summary note)
 - `!ask` — Ask AI questions (creates Q&A note)
+
+### ⚙️ **System**
+- `!update` - Pull latest framework updates from template repo
+- `!remote` - Start Remote Control session (use MindRepo from phone)
 
 ---
 
