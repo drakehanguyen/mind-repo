@@ -506,6 +506,43 @@ Creates in inbox:
 
 ### Management Commands
 
+#### `!update`
+
+**Purpose**: Pull the latest framework updates from the template repo
+
+**Action**:
+1. Run `bash scripts/update.sh` from the vault root
+2. Report what files changed (CLAUDE.md, AGENT.md, templates, scripts)
+3. Show confirmation prompt output to the user
+4. Inform the user when the update is complete or if already up to date
+
+**Note**: Never touches user content folders (10-Projects, 20-Areas, 30-Resources, 40-Journal, etc.)
+
+**Example**:
+```
+!update
+```
+
+---
+
+#### `!remote`
+
+**Purpose**: Start a Claude Remote Control session so the user can connect from their phone or any browser
+
+**Action**:
+1. Run `bash scripts/remote.sh` from the vault root
+2. Inform the user that a QR code will appear in the terminal
+3. Remind them to scan it with the Claude app (iOS/Android) or open the session URL at claude.ai/code
+
+**Requirements**: Claude Code v2.1.51+, Pro/Max/Team/Enterprise subscription.
+
+**Example**:
+```
+!remote
+```
+
+---
+
 #### `!today`
 
 **Purpose**: Quick view/summary of today's journals
@@ -1258,7 +1295,7 @@ AI: [Creates Q&A summary note, links to PySpark resources, suggests creating stu
 ## Version
 
 **Last Updated**: 2026-03-12
-**Version**: 1.1
+**Version**: 1.2
 
 ## Related
 

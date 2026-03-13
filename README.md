@@ -2,6 +2,18 @@
 
 A conversational AI-powered "Second Brain" system for Data Engineer Consultants.
 
+## For New Users
+
+1. **Download** — clone this repo or download the ZIP from GitHub
+2. **Disconnect** — run `bash scripts/setup.sh` to make your vault private (removes git link)
+3. **Open** in [Obsidian](https://obsidian.md) as a vault
+4. **Sync across devices** (optional) — run `bash scripts/sync-setup.sh` to choose iCloud / Google Drive / Obsidian Sync
+5. **Start Claude Code** — `claude` in the vault folder
+
+See [[SETUP.md]] for the full setup guide, multi-device sync, and how to use MindRepo from your phone.
+
+---
+
 ## Overview
 
 MindRepo helps you capture, organize, and retrieve:
@@ -39,7 +51,8 @@ See [[AGENT.md]] for all available commands and complete AI agent instructions (
 
 ## Documentation
 
-- [[AGENT.md]] - Complete AI agent instructions (replaces COMMANDS.md and SYSTEM_INSTRUCTIONS.md)
+- [[SETUP.md]] - Setup guide (new users start here)
+- [[AGENT.md]] - Complete AI agent instructions
 - [[COMMANDS_QUICK_REFERENCE.md]] - Quick command lookup
 
 ## Getting Started
