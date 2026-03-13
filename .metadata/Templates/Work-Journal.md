@@ -25,11 +25,9 @@ tags: [daily, journal, work]
 
 ## Related Projects
 
-- [[Project 1]]
-- [[Project 2]]
+<!-- Auto-linked by agent from entries above -->
 
 ## Related Clients
 
-- [[Client 1]]
-- [[Client 2]]
+<!-- Auto-linked by agent from entries above -->
 

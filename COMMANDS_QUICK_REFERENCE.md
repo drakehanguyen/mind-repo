@@ -1,4 +1,4 @@
-# MindRepo Commands - Quick Reference
+# MindRepo Commands — Quick Reference
 
 All available commands at a glance (use `!` prefix).
 
@@ -6,24 +6,23 @@ All available commands at a glance (use `!` prefix).
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `!journal [text]` | Add journal entry (categorized at end of day) | `!journal Fixed pipeline issue` |
-| `!log [text]` | Log work activity (legacy, direct to work journal) | `!log Fixed pipeline issue` |
+| `!journal [text]` | Capture entry to inbox (categorized at EOD) | `!journal Fixed pipeline issue` |
 | `!meeting [Client] [Topic]` | Create meeting note | `!meeting Acme Corp Review` |
-| `!study [Topic]` | Create study note | `!study PySpark Windows` |
-| `!plan [Project]` | Scaffold project | `!plan New Dashboard` |
-| `!debug [Error]` | Document error | `!debug [error trace]` |
-| `!report [Client] [Time]` | Generate report | `!report Acme Corp last week` |
-| `!refactor [text]` | Clean up text | Select text + `!refactor` |
-| `!inbox-process` | Process inbox | `!inbox-process` |
+| `!study [Topic]` | Create deep-dive study note | `!study PySpark Windows` |
+| `!plan [Project]` | Scaffold new project | `!plan New Dashboard` |
+| `!debug [Error]` | Document error and fix | `!debug [error trace]` |
+| `!report [Client] [Time]` | Generate client status report | `!report Acme Corp last week` |
+| `!refactor [text]` | Clean up selected text in-place | Select text + `!refactor` |
+| `!inbox-process` | Process inbox interactively | `!inbox-process` |
+| `!eod` | Run full end-of-day workflow | `!eod` |
 
 ## Capture Commands
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `!journal [text]` | Add journal entry (categorized at end of day) | `!journal Worked on pipeline` |
-| `!link [URL] [Desc]` | Save link (categorized at end of day) | `!link https://... Article` |
-| `!code [Desc] [Code]` | Save code | `!code Example [code]` |
-| `!idea [Text]` | Capture idea (categorized at end of day) | `!idea Build tool` |
+| `!link [URL] [Desc]` | Save link to inbox | `!link https://... Article` |
+| `!code [Desc] [Code]` | Save code snippet | `!code Example [code]` |
+| `!idea [Text]` | Capture idea to inbox | `!idea Build tool` |
 | `!note [Topic] [Content]` | Quick note | `!note Topic Content` |
 | `!task [Desc] [Project] [Due]` | Create task | `!task Review PR Acme 2024-01-15` |
 
@@ -32,12 +31,18 @@ All available commands at a glance (use `!` prefix).
 | Command | Purpose | Example |
 |---------|---------|---------|
 | `!today` | Today's summary | `!today` |
-| `!status [Project]` | Project status | `!status Acme Project` |
+| `!status [Project]` | Check project status | `!status Acme Project` |
 | `!archive [Item]` | Archive item | `!archive Old Project` |
-| `!review [Project/Time]` | Create review | `!review last month` |
+| `!review [Project/Time]` | Create review/retro | `!review last month` |
+
+## Discovery Commands
+
+| Command | Purpose | Example |
+|---------|---------|---------|
 | `!search [Query]` | Search vault | `!search PySpark` |
-| `!tag [Note] [Tags]` | Add tags | `!tag Note tag1 tag2` |
-| `!link-notes [N1] [N2]` | Link notes | `!link-notes Note1 Note2` |
+| `!tag [Note] [Tags]` | Add tags to note | `!tag Note tag1 tag2` |
+| `!link-notes [N1] [N2]` | Link two notes | `!link-notes Note1 Note2` |
+| `!link-suggest [Note]` | Suggest connections for note | `!link-suggest PySpark_Windows` |
 | `!summary [Note]` | Generate summary | `!summary Project Name` |
 
 ## Zettelkasten Commands
@@ -46,71 +51,77 @@ All available commands at a glance (use `!` prefix).
 |---------|---------|---------|
 | `!atomic [Topic]` | Create atomic permanent note | `!atomic PySpark ROW_NUMBER` |
 | `!moc [Category]` | Create/update Map of Content | `!moc PySpark` |
-| `!link-suggest [Note]` | Suggest connections for note | `!link-suggest PySpark_Windows` |
 
 ## AI Interaction Commands
 
 | Command | Purpose | Example |
 |---------|---------|---------|
-| `!brainstorm [Topic]` | Brainstorm with AI | `!brainstorm New feature ideas` |
-| `!ask [Question]` | Ask AI a question | `!ask How to optimize PySpark?` |
+| `!brainstorm [Topic]` | Brainstorm with AI (creates summary note) | `!brainstorm New feature ideas` |
+| `!ask [Question]` | Ask AI a question (creates Q&A note) | `!ask How to optimize PySpark?` |
 
 ## Help Command
 
 | Command | Purpose | Example |
 |---------|---------|---------|
 | `!help` | Show all commands | `!help` |
-| `!help [Command]` | Help for specific command | `!help log` |
+| `!help [Command]` | Help for specific command | `!help study` |
 
 ---
 
 ## Command Categories
 
-### 📝 **Logging & Capture**
-- `!journal` - Journal entries (categorized Work/Personal at end of day)
-- `!log` - Work log entries (legacy, direct to work journal)
-- `!link` - Save links (categorized at end of day)
-- `!idea` - Quick ideas (categorized at end of day)
-- `!note` - General notes
-- `!code` - Code snippets
+### 📝 Logging & Capture
+- `!journal` — Inbox capture (categorized Work/Personal at EOD)
+- `!link` — Save links (categorized at EOD)
+- `!idea` — Quick ideas (categorized at EOD)
+- `!note` — General notes
+- `!code` — Code snippets
 
-### 📋 **Project Management**
-- `!plan` - Create project
-- `!meeting` - Meeting notes
-- `!task` - Standalone tasks
-- `!status` - Check status
-- `!review` - Reviews/retros
-- `!archive` - Archive items
+### 📋 Project Management
+- `!plan` — Create project
+- `!meeting` — Meeting notes
+- `!task` — Standalone tasks
+- `!status` — Check status
+- `!review` — Reviews/retros
+- `!archive` — Archive items
 
-### 📚 **Knowledge Base**
-- `!study` - Deep study notes
-- `!debug` - Error troubleshooting
-- `!link-notes` - Connect concepts
-- `!summary` - Summarize content
+### 📚 Knowledge Base
+- `!study` — Deep study notes
+- `!debug` — Error troubleshooting
+- `!link-notes` — Connect concepts
+- `!summary` — Summarize content
 
-### 🔍 **Discovery & Organization**
-- `!search` - Search vault
-- `!report` - Generate reports
-- `!today` - Today's summary
-- `!tag` - Add tags
-- `!refactor` - Clean up text
-- `!inbox-process` - Organize inbox
+### 🔍 Discovery & Organization
+- `!search` — Search vault
+- `!report` — Generate reports
+- `!today` — Today's summary
+- `!tag` — Add tags
+- `!refactor` — Clean up text
+- `!inbox-process` — Organize inbox (interactive)
+- `!eod` — Full end-of-day workflow (5 steps)
 
-### 🧠 **Zettelkasten (Knowledge Linking)**
-- `!atomic` - Create atomic permanent notes
-- `!moc` - Create Maps of Content
-- `!link-suggest` - Find connections for notes
+### 🧠 Zettelkasten (Knowledge Linking)
+- `!atomic` — Create atomic permanent notes
+- `!moc` — Create Maps of Content
+- `!link-suggest` — Find connections for notes
 
-### 🤖 **AI Interaction**
-- `!brainstorm` - Brainstorm with AI (creates summary note)
-- `!ask` - Ask AI questions (creates Q&A note)
+### 🤖 AI Interaction
+- `!brainstorm` — Brainstorm with AI (creates summary note)
+- `!ask` — Ask AI questions (creates Q&A note)
 
 ---
 
-## Getting Help
+## EOD Workflow (`!eod`)
 
-- `!help` - Show all commands
-- `!help [command]` - Detailed help for specific command
+Runs 5 steps automatically:
+1. Process inbox → categorize all items
+2. Update Work Journal
+3. Update Personal Journal
+4. Zettelkasten linking for new resources
+5. Cleanup and summary report
 
-**Full Documentation**: See [[AGENT.md]] for complete AI agent instructions (replaces COMMANDS.md and SYSTEM_INSTRUCTIONS.md).
+Use `!inbox-process` instead for interactive, step-by-step inbox review only.
 
+---
+
+**Full Documentation**: [[CLAUDE.md]] (AI instructions) · [[AGENT.md]] (detailed specs)

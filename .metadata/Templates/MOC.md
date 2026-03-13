@@ -15,42 +15,26 @@ tags: [moc, index, zettelkasten]
 
 ## Atomic Notes
 
-<!-- Single-concept permanent notes -->
-
-- [[Atomic Note 1]]
-- [[Atomic Note 2]]
-- [[Atomic Note 3]]
+<!-- Single-concept permanent notes — auto-populated by !moc command -->
 
 ## Study Notes
 
-<!-- Comprehensive study notes -->
-
-- [[Study Note 1]]
-- [[Study Note 2]]
-- [[Study Note 3]]
+<!-- Comprehensive study notes — auto-populated by !moc command -->
 
 ## Concepts
 
-### Concept Cluster 1
-- [[Concept 1]]
-- [[Concept 2]]
-- [[Concept 3]]
-
-### Concept Cluster 2
-- [[Concept 4]]
-- [[Concept 5]]
-- [[Concept 6]]
+<!-- Group notes by themes/clusters. Example:
+### Cluster Name
+- [[Note Name]] - brief description
+-->
 
 ## Related Categories
 
-- [[Related Category MOC 1]]
-- [[Related Category MOC 2]]
+<!-- Links to other category MOCs. Example:
+- [[AWS MOC]] - Cloud infrastructure overlap
+-->
 
 ## Quick Links
 
-<!-- Most important or frequently referenced notes -->
-
-- [[Most Important Note 1]]
-- [[Most Important Note 2]]
-- [[Most Important Note 3]]
+<!-- Most important or frequently referenced notes in this category -->
 

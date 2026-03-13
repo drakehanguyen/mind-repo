@@ -203,33 +203,6 @@ Creates in inbox:
 
 ---
 
-#### `!log [text]`
-
-**Purpose**: Append work log entry to today's work journal (legacy command, use `!journal` for new entries)
-
-**Action**:
-1. Locate today's note: `/40-Journal/Work/YYYY/YYYY-MM-DD.md` (create if missing)
-2. Append entry under `## ⏱️ Work Log` section
-3. Format: `[HH:MM] [text]`
-4. Auto-link: Detect mentioned clients/projects and wrap in Wikilinks `[[Client Name]]` or `[[Project Name]]`
-
-**Auto-linking Rules**:
-- Maintain master list from existing folders in `/10-Projects/`
-- Infer from existing project/client names
-- Use both master list and inference for detection
-- Only link if confident match exists
-
-**Example**:
-```
-!log Fixed data pipeline issue for Acme Corp. Need to follow up tomorrow.
-```
-Creates:
-```markdown
-[14:30] Fixed data pipeline issue for [[Acme Corp]]. Need to follow up tomorrow.
-```
-
-**Note**: Prefer `!journal` for new entries - it allows AI to categorize work vs personal at end of day.
-
 ---
 
 #### `!meeting [Client] [Topic]`
@@ -402,6 +375,26 @@ Creates:
 **Frequency**: Daily processing (can be triggered manually or automated at end of day)
 
 **Note**: This is the same process that happens automatically at end of day, but can be run on-demand.
+
+---
+
+#### `!eod`
+
+**Purpose**: Run the full end-of-day workflow (5-step process)
+
+**Action**:
+1. **Process Inbox** — scan all items in `/00-Inbox/`, categorize each (Work Journal / Personal Journal / Resource / Project / Area / Idea / Link), ask user to confirm ambiguous items
+2. **Update Work Journal** — `/40-Journal/Work/YYYY/YYYY-MM-DD.md` — organize work entries into: Work Log, Notes, Links, Completed; extract action items to project TODOs; link to mentioned clients/projects
+3. **Update Personal Journal** — `/40-Journal/Personal/YYYY/YYYY-MM-DD.md` — organize personal entries into: Notes, Links, Reflections, Completed; link to areas if relevant
+4. **Zettelkasten Linking** — for any new `/30-Resources/` notes: suggest connections to existing notes, identify orphaned notes, update relevant MOCs
+5. **Cleanup** — clear processed inbox items; report a summary of all files created/updated
+
+**Difference from `!inbox-process`**: `!eod` runs all 5 steps automatically. `!inbox-process` is interactive and covers only Step 1.
+
+**Example**:
+```
+!eod
+```
 
 ---
 
@@ -877,11 +870,11 @@ User: Got it, thanks
    - Usage syntax
    - Quick example
 4. Organize by categories:
-   - Core Commands (log, meeting, study, plan, debug, report, refactor, inbox-process)
+   - Core Commands (journal, meeting, study, plan, debug, report, refactor, inbox-process, eod)
    - Capture Commands (link, code, idea, note, task)
    - Management Commands (today, status, archive, review)
-   - Discovery Commands (search, tag, link-notes, summary)
-   - Zettelkasten Commands (atomic, moc, link-suggest)
+   - Discovery Commands (search, tag, link-notes, summary, link-suggest)
+   - Zettelkasten Commands (atomic, moc)
    - AI Interaction Commands (brainstorm, ask)
 
 **Output Format**:
@@ -1264,6 +1257,12 @@ AI: [Creates Q&A summary note, links to PySpark resources, suggests creating stu
 
 ## Version
 
-**Last Updated**: 2024-01-XX
-**Version**: 1.0
+**Last Updated**: 2026-03-12
+**Version**: 1.1
+
+## Related
+
+- [[CLAUDE.md]] — Compact agent instructions auto-loaded by Claude Code (authoritative for AI sessions)
+- [[COMMANDS_QUICK_REFERENCE.md]] — Command lookup table
+- [[README.md]] — Project overview
 

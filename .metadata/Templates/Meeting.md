@@ -7,7 +7,7 @@ tags: [meeting, client]
 # {{title}}
 
 **Date**: {{date:YYYY-MM-DD}}
-**Client**: [[Client Name]]
+**Client**: <!-- [[Client Name]] -->
 **Topic**: {{title}}
 
 ## Agenda
@@ -32,6 +32,5 @@ tags: [meeting, client]
 
 ## Related
 
-- [[Related Project]]
-- [[Related Meeting]]
+<!-- Related project, previous meetings, or resource notes -->
 

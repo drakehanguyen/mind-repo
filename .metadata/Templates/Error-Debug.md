@@ -30,12 +30,9 @@ tags: [error, troubleshooting, debug]
 
 ## Similar Errors
 
-- [[Similar Error 1]]
-- [[Similar Error 2]]
-- [[Similar Error 3]]
+<!-- Links to related error notes found by !debug command -->
 
 ## Related
 
-- [[Related Concept]]
-- [[Related Documentation]]
+<!-- Related concepts, documentation, or resource notes -->
 

@@ -17,24 +17,13 @@ tags: [qa, question, answer, session]
 
 <!-- Important insights or learnings from the answer -->
 
-- Insight 1
-- Insight 2
-- Insight 3
-
 ## Related Topics
 
 <!-- Topics discussed during the Q&A -->
 
-- Topic 1
-- Topic 2
-- Topic 3
-
 ## Follow-up Questions
 
 <!-- Potential follow-up questions or areas to explore -->
-
-- Follow-up question 1
-- Follow-up question 2
 
 ## Session Notes
 
@@ -42,10 +31,7 @@ tags: [qa, question, answer, session]
 
 ## Related
 
-- [[Related Study Note]]
-- [[Related Concept]]
-- [[Related Resource]]
-- [[Category MOC]]
+<!-- Links to related study notes, concepts, resources, and category MOC -->
 
 ## Knowledge Gaps
 
